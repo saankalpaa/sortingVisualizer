@@ -77,6 +77,7 @@ const SortingVisualizer = () => {
   }
 
   const mergeSort = () => {
+    setIsRunning(false)
     const animations = getMergeSortAnimations(array);
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName('array-bar');
