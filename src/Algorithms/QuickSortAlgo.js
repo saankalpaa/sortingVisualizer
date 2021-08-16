@@ -5,8 +5,16 @@ export function getQuickSortAnimations(array) {
     if (arraysAreEqual(javaScriptSortedArray, array)) return animations;
     const auxiliaryArray = array.slice();
     doQuickSort(animations, auxiliaryArray, 0, auxiliaryArray.length - 1);
+
+  // for verifying the sorted array
+    const items = doQuickSort(animations, auxiliaryArray, 0, auxiliaryArray.length - 1);
+    console.log("jsSortedArray: " + javaScriptSortedArray)
+    console.log("check: " + items)
+    console.log("sorted:" + arraysAreEqual(javaScriptSortedArray, items))
+    
     return animations;
   }
+
   function arraysAreEqual(arrayOne, arrayTwo) {
     if (arrayOne.length !== arrayTwo.length) return false;
     for (let i = 0; i < arrayOne.length; i++) {
@@ -55,6 +63,6 @@ export function getQuickSortAnimations(array) {
         doQuickSort(animations, items, index, right);
       }
     }
-    console.log(items);
+    // console.log(items);
     return items;
   }

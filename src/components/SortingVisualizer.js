@@ -3,7 +3,7 @@ import {getMergeSortAnimations} from '../Algorithms/MergeSortAlgo.js';
 import { getQuickSortAnimations } from "../Algorithms/QuickSortAlgo";
 import { doQuickSort } from "../Algorithms/QuickSortAlgo";
 import { quickSortPartition } from "../Algorithms/QuickSortAlgo";
-import { getBubbleSortAnimations } from "../Algorithms/BubbleSortAlgo";
+import { doBubbleSort, getBubbleSortAnimations } from "../Algorithms/BubbleSortAlgo";
 import './SortingVisualizer.css';
 import Grid from '@material-ui/core/Grid';
 import Slider from '@material-ui/core/Slider';
@@ -42,7 +42,6 @@ const SortingVisualizer = () => {
   },[])
 
   const  resetBars = () => {
-    console.log("Reset Bars");
     const arrayBars = document.getElementsByClassName("array-bar");
     var arrayLength = arrayBars.length;
     for (let j = 0; j < arrayLength; j++) {
@@ -67,7 +66,6 @@ const SortingVisualizer = () => {
   };
 
   const  makeAllBarsTurquoise = () => {
-    console.log("Sorted");
     const arrayBars = document.getElementsByClassName("array-bar");
     var arrayLength = arrayBars.length;
     for (let j = 0; j < arrayLength; j++) {
@@ -77,7 +75,7 @@ const SortingVisualizer = () => {
   }
 
   const mergeSort = () => {
-    setIsRunning(false)
+    // setIsRunning(!isRunning);
     const animations = getMergeSortAnimations(array);
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName('array-bar');
@@ -86,7 +84,7 @@ const SortingVisualizer = () => {
         const [oldPosition, newPosition] = animations[i];
         const oldBarStyle = arrayBars[oldPosition].style;
         const newBarStyle = arrayBars[newPosition].style;
-        const color = i % 3 === 0 ? "#ed1c24" : "turquoise";
+        const color = i % 3 === 0 ? "#B33F40 " : "#47D2CC";
         setTimeout(() => {
           oldBarStyle.backgroundColor = color;
           newBarStyle.backgroundColor = color;
@@ -98,7 +96,7 @@ const SortingVisualizer = () => {
           oldBarStyle.height = `${newHeight}px`;
           if (i === animations.length - 1) {
             makeAllBarsTurquoise();
-            setIsRunning(true)
+            setIsRunning(true);
           }
         }, i * speed);
       }
@@ -109,7 +107,6 @@ const SortingVisualizer = () => {
   const quickSort = () => {
     setIsRunning(!isRunning);
     const animations = getQuickSortAnimations(array);
-    console.log(animations);
     const arrayBars = document.getElementsByClassName("array-bar");
 
     for (let i = 0; i < animations.length; i++) {
@@ -138,13 +135,13 @@ const SortingVisualizer = () => {
         oldBarStyle.height = `${array[oldPosition]}px`;
         newBarStyle.height = `${array[newPosition]}px`;
 
-        oldBarStyle.backgroundColor = "turquoise";
-        newBarStyle.backgroundColor = "#ed1c24";
+        oldBarStyle.backgroundColor = "#47D2CC";
+        newBarStyle.backgroundColor = "#318AAA";
 
         var currentPosition = oldPosition;
         for (let j = 0; j < currentPosition; j++) {
           var jBarStyle = arrayBars[j].style;
-          jBarStyle.backgroundColor = "turquoise";
+          jBarStyle.backgroundColor = "#47D2CC";
         }
         if (i === animations.length - 1) {
           makeAllBarsTurquoise();
@@ -158,7 +155,7 @@ const SortingVisualizer = () => {
     setIsRunning(!isRunning);
     const animations = getBubbleSortAnimations(array);
     const arrayBars = document.getElementsByClassName("array-bar");
-    console.log("arrayBars: " + arrayBars)
+
     for (let i = 0; i < animations.length; i++) {
       setTimeout(() => {
         var [oldPosition, newPosition] = animations[i];
@@ -173,13 +170,13 @@ const SortingVisualizer = () => {
         oldBarStyle.height = `${array[oldPosition]}px`;
         newBarStyle.height = `${array[newPosition]}px`;
 
-        oldBarStyle.backgroundColor = "#ed1c24";
-        newBarStyle.backgroundColor = "turquoise";
+        oldBarStyle.backgroundColor = "#318AAA";
+        newBarStyle.backgroundColor = "#47D2CC";
 
         var currentPosition = oldPosition;
         for (let j = 0; j < currentPosition; j++) {
           var jBarStyle = arrayBars[j].style;
-          jBarStyle.backgroundColor = "#ed1c24";
+          jBarStyle.backgroundColor = "#318AAA";
         }
         if (i === animations.length - 1) {
           makeAllBarsTurquoise();
@@ -190,10 +187,7 @@ const SortingVisualizer = () => {
   }
 
   const handleAlgo = (event) => {
-    console.log('before:' + event.target.id)
     setCurrentAlgo(event.target.id)
-    console.log('after:' + currentAlgo)
-
   }
 
   const sort = (algo) => {
@@ -213,7 +207,6 @@ const SortingVisualizer = () => {
 
   const handleSpeed = (changedSpeed) => {
     setSpeed(changedSpeed)
-    console.log('speed :' + speed)
   }
 
     return (
@@ -226,21 +219,21 @@ const SortingVisualizer = () => {
             <div className="reset-btn">
               <button 
                 onClick={isRunning ? () => resetArray() : null}
-                style = {{ color: isRunning? "white": "#ed1c24", pointerEvents: isRunning ? "auto" : "none"}}
+                style = {{ opacity: isRunning? "1": "0.2", pointerEvents: isRunning ? "auto" : "none"}}
                 >
                 Generate New Array
               </button>
             </div>
             <div className="dropdown">
-              <button style = {{ color: isRunning? "white": "#ed1c24", pointerEvents: isRunning ? "auto" : "none"}} className="dropbtn">Speed</button>  
+              <button style = {{ opacity: isRunning? "1": "0.2", pointerEvents: isRunning ? "auto" : "none"}} className="dropbtn">Speed</button>  
               <div className="dropdown-content">
-                <a href="#" onClick={isRunning ? () => handleSpeed(500) : null}>1x</a>
+                <a href="#" onClick={isRunning ? () => handleSpeed(300) : null}>1x</a>
                 <a href="#" onClick={isRunning ? () => handleSpeed(50)  : null}>2x</a>
                 <a href="#" onClick={isRunning ? () => handleSpeed(25)  : null}>4x</a>
               </div>
             </div>
             <div className="dropdown">
-              <button style = {{ color: isRunning? "white": "#ed1c24", pointerEvents: isRunning ? "auto" : "none"}} className="dropbtn">Algorithms</button>
+              <button style = {{ opacity: isRunning? "1": "0.2", pointerEvents: isRunning ? "auto" : "none"}} className="dropbtn">Algorithms</button>
               <div className="dropdown-content">
                 <a id="Merge" href="#" onClick={handleAlgo}>Merge Sort</a>
                 <a id="Quick" href="#" onClick={handleAlgo}>Quick Sort</a>
@@ -251,7 +244,7 @@ const SortingVisualizer = () => {
               <div className={classes1.root1}>
                   <Grid container spacing={2} alignItems="center">
                     <Grid item>
-                      <Typography className="slider-title" style={{ color: isRunning? "white" : "#ed1c24", fontSize: "18px", fontFamily: "Bebas Neue"}}>Adjust Array Size</Typography>
+                      <Typography className="slider-title" style={{ opacity: isRunning? "1": "0.2", fontSize: "18px", fontFamily: "Bebas Neue"}}>Adjust Array Size</Typography>
                     </Grid>
                     <Grid item xs>
                         <Slider
@@ -261,7 +254,7 @@ const SortingVisualizer = () => {
                           color="secondary"
                           min={10}
                           max={80}
-                          style={{color: isRunning ? "#248277" :"#ed1c24"}}
+                          style={{color: "#248277", opacity: isRunning? "1": "0.2"}}
                           disabled={isRunning ? null : "disabled"}
                         />
                     </Grid>
@@ -271,7 +264,7 @@ const SortingVisualizer = () => {
             <button   
             className = "sortBtn" 
             onClick={isRunning ? () => sort(currentAlgo) : null}
-            style = {{ background: isRunning? "#248277": "#ed1c24", pointerEvents: isRunning ? "auto" : "none"}}
+            style = {{ opacity: isRunning? "1": "0.2", pointerEvents: isRunning ? "auto" : "none"}}
             >
               {currentAlgo} Sort
             </button>

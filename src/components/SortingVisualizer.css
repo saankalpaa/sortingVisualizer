@@ -96,7 +96,7 @@ nav .logo {
 }
 
 .nav-right button:hover {
-  color: #248277 !important;
+  color: #248277;
 }
 
 .reset-btn {
@@ -124,7 +124,7 @@ nav .logo {
 
 .sortBtn:hover {
   color: #248277;
-  background: #fff !important;
+  background: #fff;
 }
 
 .dropbtn {

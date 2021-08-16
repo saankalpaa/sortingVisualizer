@@ -18,7 +18,25 @@ function mergeSortHelper(
   mergeSortHelper(auxiliaryArray, startIdx, middleIdx, mainArray, animations);
   mergeSortHelper(auxiliaryArray, middleIdx + 1, endIdx, mainArray, animations );
   doMerge(mainArray, startIdx, middleIdx, endIdx, auxiliaryArray, animations);
+
+  // for verifying the sorted array
+  const items =   doMerge(mainArray, startIdx, middleIdx, endIdx, auxiliaryArray, animations);
+  const javaScriptSortedArray = auxiliaryArray.slice().sort((a, b) => a - b);
+  console.log("jsSortedArray: " + javaScriptSortedArray)
+  console.log("check: " + items)
+  console.log("sorted:" + arraysAreEqual(javaScriptSortedArray, items))
 }
+
+function arraysAreEqual(arrayOne, arrayTwo) {
+  if (arrayOne.length !== arrayTwo.length) return false;
+  for (let i = 0; i < arrayOne.length; i++) {
+    if (arrayOne[i] !== arrayTwo[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
 
 function doMerge(
   mainArray,
@@ -74,4 +92,5 @@ function doMerge(
     animations.push([k, auxiliaryArray[j]]);
     mainArray[k++] = auxiliaryArray[j++];
   }
+  return mainArray;
 }
