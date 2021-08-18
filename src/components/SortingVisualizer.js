@@ -3,7 +3,7 @@ import {getMergeSortAnimations} from '../Algorithms/MergeSortAlgo.js';
 import { getQuickSortAnimations } from "../Algorithms/QuickSortAlgo";
 import { doQuickSort } from "../Algorithms/QuickSortAlgo";
 import { quickSortPartition } from "../Algorithms/QuickSortAlgo";
-import { doBubbleSort, getBubbleSortAnimations } from "../Algorithms/BubbleSortAlgo";
+import { getBubbleSortAnimations } from "../Algorithms/BubbleSortAlgo";
 import './SortingVisualizer.css';
 import Grid from '@material-ui/core/Grid';
 import Slider from '@material-ui/core/Slider';
@@ -74,29 +74,30 @@ const SortingVisualizer = () => {
     }
   }
 
-  const mergeSort = () => {
-    // setIsRunning(!isRunning);
+  const mergeSort = async () => {
+    await setIsRunning(false)
     const animations = getMergeSortAnimations(array);
+    const arrayBars = document.getElementsByClassName("array-bar");
+
     for (let i = 0; i < animations.length; i++) {
-      const arrayBars = document.getElementsByClassName('array-bar');
       const isColorChange = i % 3 !== 2;
       if (isColorChange) {
-        const [oldPosition, newPosition] = animations[i];
-        const oldBarStyle = arrayBars[oldPosition].style;
-        const newBarStyle = arrayBars[newPosition].style;
-        const color = i % 3 === 0 ? "#B33F40 " : "#47D2CC";
+        const [barOneIdx, barTwoIdx] = animations[i];
+        const barOneStyle = arrayBars[barOneIdx].style;
+        const barTwoStyle = arrayBars[barTwoIdx].style;
+        const color = i % 3 === 0 ? "#B33F40" : "#47D2CC";
         setTimeout(() => {
-          oldBarStyle.backgroundColor = color;
-          newBarStyle.backgroundColor = color;
+          barOneStyle.backgroundColor = color;
+          barTwoStyle.backgroundColor = color;
         }, i * speed);
       } else {
         setTimeout(() => {
-          const [oldPosition, newHeight] = animations[i];
-          const oldBarStyle = arrayBars[oldPosition].style;
-          oldBarStyle.height = `${newHeight}px`;
+          const [barOneIdx, newHeight] = animations[i];
+          const barOneStyle = arrayBars[barOneIdx].style;
+          barOneStyle.height = `${newHeight}px`;
           if (i === animations.length - 1) {
+            setIsRunning(true)
             makeAllBarsTurquoise();
-            setIsRunning(true);
           }
         }, i * speed);
       }
@@ -191,16 +192,16 @@ const SortingVisualizer = () => {
   }
 
   const sort = (algo) => {
-    if (algo == ""){
+    if (algo === ""){
       alert('choose an algorithm first!!')
     }
-    else if(algo == "Merge"){
+    else if(algo === "Merge"){
       mergeSort()
     }
-    else if(algo == "Quick"){
+    else if(algo === "Quick"){
       quickSort()
     }
-    else if(algo == "Bubble"){
+    else if(algo === "Bubble"){
       bubbleSort()
     }
   }
@@ -227,17 +228,17 @@ const SortingVisualizer = () => {
             <div className="dropdown">
               <button style = {{ opacity: isRunning? "1": "0.2", pointerEvents: isRunning ? "auto" : "none"}} className="dropbtn">Speed</button>  
               <div className="dropdown-content">
-                <a href="#" onClick={isRunning ? () => handleSpeed(300) : null}>1x</a>
-                <a href="#" onClick={isRunning ? () => handleSpeed(50)  : null}>2x</a>
-                <a href="#" onClick={isRunning ? () => handleSpeed(25)  : null}>4x</a>
+                <a href="/#" onClick={isRunning ? () => handleSpeed(300) : null}>1x</a>
+                <a href="/#" onClick={isRunning ? () => handleSpeed(50)  : null}>2x</a>
+                <a href="/#" onClick={isRunning ? () => handleSpeed(25)  : null}>4x</a>
               </div>
             </div>
             <div className="dropdown">
               <button style = {{ opacity: isRunning? "1": "0.2", pointerEvents: isRunning ? "auto" : "none"}} className="dropbtn">Algorithms</button>
               <div className="dropdown-content">
-                <a id="Merge" href="#" onClick={handleAlgo}>Merge Sort</a>
-                <a id="Quick" href="#" onClick={handleAlgo}>Quick Sort</a>
-                <a id="Bubble" href="#" onClick={handleAlgo}>Bubble Sort</a>
+                <a id="Merge" href="/#" onClick={handleAlgo}>Merge Sort</a>
+                <a id="Quick" href="/#" onClick={handleAlgo}>Quick Sort</a>
+                <a id="Bubble" href="/#" onClick={handleAlgo}>Bubble Sort</a>
               </div>
             </div>
             <div className="range-slider">
